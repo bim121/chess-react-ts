@@ -6,6 +6,8 @@ import { Knight } from "./figures/Knight";
 import { Pawn } from "./figures/Pawn";
 import { Bishop } from "./figures/Bishop";
 import { Rock } from "./figures/Rock";
+import { runInThisContext } from "vm";
+import { FigureNames } from "./figures/Figure";
 
 export class Board{
     cells: Cell[][] = [];
@@ -41,6 +43,59 @@ export class Board{
                 const target = row[j];
                 target.available = !!selectedCell?.figure?.canMove(target);
             }
+        }
+    }
+
+    public whichCellsIsUnderAttack(cellWithKing: Cell){
+        let colorAgainst = Colors.BLACK;
+        if(cellWithKing?.figure?.color === Colors.BLACK){
+         colorAgainst = Colors.WHITE;
+        }
+        this.restartCellsUnderAttack();
+        for(let i = 0; i < this.cells.length; i++){
+            const row = this.cells[i];
+            for(let j = 0; j < row.length; j++){
+                const target = row[j];
+                if(target.figure != null && target?.figure?.color === colorAgainst){
+                    this.underAttack(target);
+                }
+            }
+        }
+    }
+
+    private restartCellsUnderAttack(){
+        for(let i = 0; i < this.cells.length; i++){
+            const row = this.cells[i];
+            for(let j = 0; j < row.length; j++){
+                const target = row[j];
+                target.underAtack = false;
+            }
+        }
+    }
+
+    private underAttack(CellWithCell: Cell){
+        for(let i = 0; i < this.cells.length; i++){
+            const row = this.cells[i];
+            for(let j = 0; j < row.length; j++){
+                const target = row[j];
+                if(CellWithCell?.figure?.name === FigureNames.PAWN){
+                    this.canBeat(CellWithCell, target);
+                }
+                else{
+                    if(true === !!CellWithCell?.figure?.canMove(target)){
+                        target.underAtack = true;
+                    }
+                }
+            }
+        }
+    }
+
+    private canBeat(CellWithCell:Cell, target: Cell){
+        const direction = CellWithCell.figure?.color === Colors.BLACK ? 1 : -1;
+
+        if(target.y === CellWithCell.y + direction
+            && (target.x === CellWithCell.x + 1 || target.x === CellWithCell.x - 1)){
+                target.underAtack = true;
         }
     }
 

@@ -32,7 +32,7 @@ export class Pawn extends Figure {
             && (target.x === this.cell.x + 1 || target.x === this.cell.x - 1)
             && this.cell.isEnemy(target)){
                 return true;
-            }
+        }
 
         return false;
     }

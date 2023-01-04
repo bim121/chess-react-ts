@@ -23,7 +23,15 @@ const BoardComponent: FC<BoardProps> = ({board, setBoard}) => {
 
     useEffect(() => {
         highlightCells();
+        whichCellsIsUnderAttack();
     }, [selectedCell])
+
+    function whichCellsIsUnderAttack(){
+        if(selectedCell?.figure?.name == "Король"){
+            board.whichCellsIsUnderAttack(selectedCell);
+            updateBoard();
+        }
+    }
 
     function highlightCells(){
         board.highlightCells(selectedCell);

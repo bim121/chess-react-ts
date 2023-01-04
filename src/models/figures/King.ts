@@ -1,5 +1,6 @@
 import { Cell } from "../Cell";
 import { Colors } from "../Colors";
+import {Board} from "../Board"
 import {Figure, FigureNames} from "./Figure";
 import blackLogo from '../../image/black_king.png';
 import whiteLogo from '../../image/white_king.png';
@@ -15,6 +16,24 @@ export class King extends Figure {
         if(!super.canMove(target)){
             return false;
         }
-        return true;
+
+        const isVerticalMove = (target.y === this.cell.y + 1 || target.y === this.cell.y - 1) && target.x === this.cell.x;
+        const isHorizontalMove = (target.x === this.cell.x + 1 || target.x === this.cell.x - 1) && target.y === this.cell.y;
+
+        const ifLeftDiagonal = (
+            (target.x === this.cell.x + 1 && target.y === this.cell.y + 1)
+            || (target.x === this.cell.x - 1 && target.y === this.cell.y - 1)
+        );
+
+        const isRightDiagonal = (
+            (target.x === this.cell.x + 1 && target.y === this.cell.y - 1)
+            || (target.x === this.cell.x - 1 && target.y === this.cell.y + 1)
+        );
+
+        if((isVerticalMove || isHorizontalMove || ifLeftDiagonal || isRightDiagonal) && !target.underAtack){
+            return true;
+        }
+
+        return false;
     }
 }

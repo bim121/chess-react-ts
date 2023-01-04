@@ -11,6 +11,7 @@ export class Cell{
     figure: Figure | null;
     board: Board;
     available: boolean;
+    underAtack: boolean;
     id:number;
 
     constructor(board:Board, x:number,y:number, color: Colors, figure: Figure | null ){
@@ -20,6 +21,7 @@ export class Cell{
             this.figure = figure;
             this.board = board;
             this.available = false;
+            this.underAtack = false;
             this.id = Math.random();
     }
 
