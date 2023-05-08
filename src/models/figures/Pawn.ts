@@ -21,13 +21,22 @@ export class Pawn extends Figure {
         const direction = this.cell.figure?.color === Colors.BLACK ? 1 : -1;
         const firstStepDirection = this.cell.figure?.color === Colors.BLACK ? 2:-2;
 
-        if((target.y === this.cell.y + direction || this.isFirstStep 
-            && (target.y === this.cell.y + firstStepDirection))
+        if (
+            (target.y === this.cell.y + direction || this.isFirstStep
+                && (
+                    target.y === this.cell.y + firstStepDirection
+                    && (
+                        firstStepDirection > 0 ?
+                            this.cell.board.getCell(target.x, target.y - 1).isEmpty()
+                            :
+                            this.cell.board.getCell(target.x, target.y + 1).isEmpty()
+                    ))
+            )
             && target.x === this.cell.x
-            && this.cell.board.getCell(target.x, target.y).isEmpty()){
-                return true;
+            && this.cell.board.getCell(target.x, target.y).isEmpty()
+        ){
+            return true
         }
-
         if(target.y === this.cell.y + direction
             && (target.x === this.cell.x + 1 || target.x === this.cell.x - 1)
             && this.cell.isEnemy(target)){

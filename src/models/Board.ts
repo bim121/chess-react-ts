@@ -7,10 +7,12 @@ import { Pawn } from "./figures/Pawn";
 import { Bishop } from "./figures/Bishop";
 import { Rock } from "./figures/Rock";
 import { runInThisContext } from "vm";
-import { FigureNames } from "./figures/Figure";
+import { Figure, FigureNames } from "./figures/Figure";
 
 export class Board{
     cells: Cell[][] = [];
+    lostBlackFigures: Figure[] = [];
+    lostWhiteFigures: Figure[] = [];
 
     public initCells(){
         for(let i = 0; i < 8; i++){
@@ -33,6 +35,8 @@ export class Board{
     public getCopyBoard():Board{
         const newBoard = new Board();
         newBoard.cells = this.cells;
+        newBoard.lostBlackFigures = this.lostBlackFigures;
+        newBoard.lostWhiteFigures = this.lostWhiteFigures;
         return newBoard;
     }
 
