@@ -8,7 +8,7 @@ export enum FigureNames{
     KNIGHT = "Кінь",
     PAWN = "Пішак",
     QUEEN = "Ферзь",
-    ROCK = "Ладья",
+    ROCK = "Тура",
     BISHOP = "Слон",
 }
 
